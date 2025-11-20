@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAP.NOOH | حاسبة الصحة والرياضة</title>
+    <link rel="icon" href="photo/13.jpeg">
+    <!-- استدعاء الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- إعدادات الألوان والمتغيرات --- */
+        :root {
+            /* الألوان الأساسية */
+            --primary-color: #f59e0b; /* برتقالي/ذهبي */
+            --primary-hover: #d97706;
+            
+            /* خلفيات الوضع الفاتح */
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --input-bg: #f9fafb;
+            
+            /* ألوان الأقسام */
+            --color-bb: #d97706;
+            --color-normal: #2563eb;
+            --color-who: #059669;
+            --color-athlete: #dc2626;
+            --color-bmi: #7c3aed;
+
+            /* قياسات */
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            --transition-speed: 0.3s;
+        }
+
+        /* إعدادات الوضع الليلي */
+        html.dark {
+            --bg-body: #0f172a;      /* كحلي غامق جداً */
+            --bg-card: #1e293b;      /* كحلي أفتح قليلاً للكروت */
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --input-bg: #334155;
+        }
+
+        /* --- القواعد العامة Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        /* --- تنسيق الهيدر والناف بار --- */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+.logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        /* قائمة الكمبيوتر */
+        .desktop-nav {
+            display: none;
+            gap: 5px;
+        }
+
+        @media (min-width: 992px) {
+            .desktop-nav {
+                display: flex;
+            }
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(0,0,0,0.05);
+            color: var(--primary-color);
+        }
+        html.dark .nav-btn:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        /* أدوات التحكم (ثيم + موبايل) */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: var(--bg-body);
+            border: 1px solid var(--border-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .mobile-toggle {
+            display: flex;
+        }
+        @media (min-width: 992px) {
+            .mobile-toggle {
+                display: none;
+            }
+        }
+
+        /* القائمة المنسدلة للموبايل */
+        .mobile-menu {
+            display: none;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .mobile-link {
+            padding: 12px;
+            border-radius: 8px;
+            background: transparent;
+            border: none;
+            text-align: right;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .mobile-link:hover {
+            background-color: var(--bg-body);
+        }
+        
+        .mobile-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- المحتوى الرئيسي --- */
+        main {
+            flex: 1;
+            padding: 2rem 1rem;
+            max-width: 900px; /* عرض مناسب للشاشات */
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* الكروت والأقسام */
+        .section-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            display: none; /* مخفي افتراضياً */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* رأس الكارت */
+        .card-header {
+            padding: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* تدرجات لونية لكل قسم */
+        .header-bb { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); }
+        .header-normal { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        .header-who { background: linear-gradient(135deg, #10b981 0%, #047857 100%); }
+        .header-athlete { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); }
+        .header-bmi { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-bg-icon {
+            position: absolute;
+            bottom: -20px;
+            left: 10px;
+            font-size: 8rem;
+            opacity: 0.15;
+            z-index: 1;
+            transform: rotate(15deg);
+        }
+
+        /* جسم الكارت والفورم */
+        .card-body {
+            padding: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .card-body {
+                padding: 1.5rem;
+            }
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr 1fr; /* عمودين في الشاشات الكبيرة */
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-color);
+            background-color: var(--input-bg);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+            background-color: var(--bg-card);
+        }
+
+        /* أزرار الحساب */
+        .btn-calculate {
+            width: 100%;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: none;
+            color: white;
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.1s, box-shadow 0.2s;
+            margin-top: 1rem;
+        }
+
+        .btn-calculate:active {
+            transform: scale(0.98);
+        }
+
+        /* ألوان الأزرار حسب القسم */
+        .btn-bb { background-color: var(--color-bb); box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4); }
+        .btn-normal { background-color: var(--color-normal); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
+        .btn-who { background-color: var(--color-who); box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4); }
+        .btn-athlete { background-color: var(--color-athlete); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); }
+        .btn-bmi { background-color: var(--color-bmi); box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); }
+
+        .btn-calculate:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        /* قسم النتائج */
+        .results-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--bg-body);
+            border-radius: var(--radius-lg);
+            border-right: 5px solid var(--primary-color);
+            display: none; /* مخفي حتى الحساب */
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+        
+        .result-value {
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .macros-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .macro-card {
+            background-color: var(--bg-card);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .macro-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; }
+        .macro-num { font-weight: 800; font-size: 1.2rem; direction: ltr; }
+
+        .text-protein { color: #3b82f6; }
+        .text-carbs { color: #eab308; }
+        .text-fats { color: #ef4444; }
+
+        /* تنبيهات الحالات الخاصة */
+        .alert-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #047857;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        html.dark .alert-box {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+        }
+
+        /* --- تنسيق النافذة المنبثقة (Custom Alert) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-box {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid var(--border-color);
+        }
+        .modal-overlay.open .modal-box {
+            transform: scale(1);
+        }
+        .modal-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        .modal-message {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        .modal-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: filter 0.2s, transform 0.1s;
+            font-family: inherit;
+        }
+        .modal-btn:hover {
+            filter: brightness(1.1);
+        }
+        .modal-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        #footer-link {
+            color: var(--primary-color);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .developer {
+            color: rgba(7, 184, 101, 0.774);
+            font-weight: 700;
+        }
+        .bodybuilders_card,.normal_card,.who_card,.athlete_card,.bmi_card {
+            gap: 10px;
+            width: 100%;
+            height: 400px;
+        }
+        .bodybuilders-icon,.normal-icon,.who-icon,.athlete-icon,.bmi-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 1%;
+            overflow: hidden;
+            margin-right: 10px;
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><img class="logo-img" src="photo/13.jpeg" alt=""></div>
+                <div class="logo-text">CAP.NOOH</div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="desktop-nav">
+                <button onclick="switchTab('bodybuilders')" class="nav-btn active" data-target="bodybuilders">كمال الأجسام</button>
+                <button onclick="switchTab('normal')" class="nav-btn" data-target="normal">الأشخاص العاديين</button>
+                <button onclick="switchTab('who')" class="nav-btn" data-target="who">منظمة الصحة العالمية</button>
+                <button onclick="switchTab('athletes')" class="nav-btn" data-target="athletes">الرياضيين</button>
+                <button onclick="switchTab('bmi')" class="nav-btn" data-target="bmi">كتلة الجسم (BMI)</button>
+            </nav>
+
+            <!-- Controls -->
+            <div class="controls">
+                <button id="themeToggle" class="icon-btn" title="تبديل الوضع">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button id="menuToggle" class="icon-btn mobile-toggle" title="القائمة">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu">
+            <button onclick="switchTab('bodybuilders')" class="mobile-link active" data-target="bodybuilders"> <i class="fa-solid fa-dumbbell ml-2"></i> كمال الأجسام</button>
+            <button onclick="switchTab('normal')" class="mobile-link" data-target="normal"> <i class="fa-solid fa-person ml-2"></i> الأشخاص العاديين</button>
+            <button onclick="switchTab('who')" class="mobile-link" data-target="who"> <i class="fa-solid fa-user-doctor ml-2"></i> منظمة الصحة العالمية</button>
+            <button onclick="switchTab('athletes')" class="mobile-link" data-target="athletes"> <i class="fa-solid fa-person-running ml-2"></i> الرياضيين (عالي)</button>
+            <button onclick="switchTab('bmi')" class="mobile-link" data-target="bmi"> <i class="fa-solid fa-weight-scale ml-2"></i> كتلة الجسم (BMI)</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Bodybuilders Section -->
+        <section id="bodybuilders" class="section-card active">
+            <div class="bodybuilders_card card-header header-bb">
+                <i class="fa-solid fa-weight-hanging header-bg-icon"></i>
+                <!-- <div class="logo-icon"><img src="photo/13.jpeg" alt=""></div> -->
+                <div class="bodybuilders-icon"><img src="photo/2.jpeg" alt=""></div>
+                <!-- <h2 class="card-title">كمال الأجسام</h2> -->
+                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">حساب السعرات والماكروز للاعبين</p> -->
+            </div>
+            <div class="card-body">
+                <div class="grid-layout">
+                    <div class="input-group">
+                        <label class="input-label">الجنس</label>
+                        <select id="bb_gender" class="form-control">
+                            <option value="male">ذكر</option>
+                            <option value="female">أنثى</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">الوزن (كجم)</label>
+                        <input type="number" id="bb_weight" class="form-control" placeholder="80">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">الطول (سم)</label>
+                        <input type="number" id="bb_height" class="form-control" placeholder="175">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">العمر (سنة)</label>
+                        <input type="number" id="bb_age" class="form-control" placeholder="25">
+                    </div>
+                    <div class="input-group full-width">
+                        <label class="input-label">معدل النشاط اليومي</label>
+                        <select id="bb_activity" class="form-control">
+                            <option value="1.37">1.37</option>
+                            <option value="1.55">1.55</option>
+                            <option value="1.725">1.725</option>
+                            <option value="1.9">1.9</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button onclick="calcBodybuilder()" class="btn-calculate btn-bb">
+                    <i class="fa-solid fa-calculator"></i> احسب النتائج
+                </button>
+
+                <!-- Result Box -->
+                <div id="bb_result" class="results-container" style="border-color: var(--color-bb);">
+                    <div class="result-header">
+                        <span class="result-title">التقرير النهائي</span>
+                        <i class="fa-solid fa-check-circle" style="color: var(--color-bb);"></i>
+                    </div>
+                    <div class="result-item">
+                        <span>معدل الحرق الأساسي (BMR):</span>
+                        <span class="result-value" id="bb_bmr_val">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>احتياج السعرات اليومي:</span>
+                        <span class="result-value" style="color: var(--color-bb); font-size: 1.3rem;" id="bb_total_val">0</span>
+                    </div>
+                    
+                    <div class="macros-box">
+                        <div class="macro-card">
+                            <div class="macro-label">بروتين (g)</div>
+                            <div class="macro-num text-protein" id="bb_protein">0</div>
+                        </div>
+                        <div class="macro-card">
+                            <div class="macro-label">كارب (g)</div>
+                            <div class="macro-num text-carbs" id="bb_carbs">0</div>
+                        </div>
+                        <div class="macro-card">
+                            <div class="macro-label">دهون (g)</div>
+                            <div class="macro-num text-fats" id="bb_fats">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Normal People Section -->
+        <section id="normal" class="section-card">
+            <div class="normal_card card-header header-normal">
+                <i class="fa-solid fa-person-walking header-bg-icon"></i>
+                <div class="normal-icon"><img src="photo/6.jpeg" alt=""></div>
+                <!-- <h2 class="card-title">الأشخاص العاديين</h2> -->
+                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">للحياة اليومية والنشاط العادي</p> -->
+            </div>
+            <div class="card-body">
+                <div class="grid-layout">
+                    <div class="input-group">
+                        <label class="input-label">الجنس</label>
+                        <select id="norm_gender" class="form-control">
+                            <option value="male">ذكر</option>
+                            <option value="female">أنثى</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">الوزن (كجم)</label>
+                        <input type="number" id="norm_weight" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">الطول (سم)</label>
+                        <input type="number" id="norm_height" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">العمر (سنة)</label>
+                        <input type="number" id="norm_age" class="form-control">
+                    </div>
+                    <div class="input-group full-width">
+                        <label class="input-label">معدل النشاط</label>
+                        <select id="norm_activity" class="form-control">
+                            <option value="1.2">1.2</option>
+                            <option value="1.3">1.3</option>
+                            <option value="1.4">1.4</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="calcNormal()" class="btn-calculate btn-normal">
+                    <i class="fa-solid fa-calculator"></i> احسب
+                </button>
+
+                <div id="norm_result" class="results-container" style="border-color: var(--color-normal);">
+                    <div class="result-header">
+                        <span class="result-title" style="color: var(--color-normal);">النتائج</span>
+                    </div>
+                    <div class="result-item">
+                        <span>BMR (معادلة خاصة):</span>
+                        <span class="result-value" id="norm_bmr_val">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>السعرات الكلية:</span>
+                        <span class="result-value" style="color: var(--color-normal);" id="norm_total_val">0</span>
+                    </div>
+                    <div class="macros-box">
+                        <div class="macro-card"><div class="macro-label">بروتين</div><div class="macro-num text-protein" id="norm_protein">0</div></div>
+                        <div class="macro-card"><div class="macro-label">كارب</div><div class="macro-num text-carbs" id="norm_carbs">0</div></div>
+                        <div class="macro-card"><div class="macro-label">دهون</div><div class="macro-num text-fats" id="norm_fats">0</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. WHO Section -->
+        <section id="who" class="section-card">
+            <div class="who_card card-header header-who">
+                <i class="fa-solid fa-user-doctor header-bg-icon"></i>
+                <div class="who-icon"><img src="photo/12.jpeg" alt=""></div>
+                <!-- <h2 class="card-title">منظمة الصحة العالمية</h2> -->
+                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">معادلات منظمة الصحة العالمية مع الحالات الخاصة</p> -->
+            </div>
+            <div class="card-body">
+                <div class="grid-layout">
+                    <div class="input-group">
+                        <label class="input-label">الجنس</label>
+                        <select id="who_gender" class="form-control">
+                            <option value="male">ذكر</option>
+                            <option value="female">أنثى</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">الوزن (كجم)</label>
+                        <input type="number" id="who_weight" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">العمر (سنة)</label>
+                        <input type="number" id="who_age" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">النشاط</label>
+                        <select id="who_activity" class="form-control">
+                            <option value="1.2">1.2</option>
+                            <option value="1.3">1.3</option>
+                            <option value="1.4">1.4</option>
+                        </select>
+                    </div>
+                    <div class="input-group full-width">
+                        <label class="input-label">حالات مرضية / خاصة</label>
+                        <select id="who_special_status" onchange="toggleSpecialCase()" class="form-control" style="margin-bottom: 10px;">
+                            <option value="none">لا يوجد</option>
+                            <option value="yes">نعم، يوجد حالة</option>
+                        </select>
+                        
+                      <div id="special_case_container" style="display: none; animation: slideDown 0.3s;">
+                            <select id="who_disease" class="form-control" style="border-color: var(--color-who);">
+                                <option value="diabetes">مريض السكر (+300)</option>
+                                <option value="hypertension">مريض الضغط (-250)</option>
+                                <option value="heart_disease">مريض القلب (-250)</option>
+                                <option value="hypothyroid">كسل الغدة الدرقية (-500)</option>
+                                <option value="hyperthyroid">فرط نشاط الغدة (+500)</option>
+                                <option value="hyperlipidemia">ارتفاع الكوليسترول (-150)</option>
+                                <option value="liver_disease">مريض الكبد (+300)</option>
+                                <option value="renal_failure">فشل كلوي (+800)</option>
+                                <option value="anemia">أنيميا (+300 بروتين)</option>
+                                <option value="pregnant">حامل (+300/500)</option>
+                                <option value="lactating">مرضع (+0)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="calcWHO()" class="btn-calculate btn-who">
+                    <i class="fa-solid fa-stethoscope">احسب </i> 
+                </button>
+
+                <div id="who_result" class="results-container" style="border-color: var(--color-who);">
+                    
+                    <div id="who_special_info" class="alert-box">
+                        <strong id="special_name" style="display: block; margin-bottom: 4px;"></strong>
+                        <span id="special_effect"></span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>BMR (WHO):</span>
+                        <span class="result-value" id="who_bmr">0</span>
+                    </div>
+                    <div class="result-item" style="opacity: 0.7;">
+                        <span>قبل التعديل:</span>
+                        <span class="result-value" id="who_before">0</span>
+                    </div>
+                    <div class="result-item" style="margin-top: 10px; border-top: 1px solid var(--border-color); padding-top: 10px;">
+                        <span>السعرات النهائية:</span>
+                        <span class="result-value" style="color: var(--color-who); font-size: 1.3rem;" id="who_final">0</span>
+                    </div>
+                    
+                    <div class="macros-box">
+                        <div class="macro-card"><div class="macro-label">بروتين</div><div class="macro-num text-protein" id="who_p">0</div></div>
+                        <div class="macro-card"><div class="macro-label">كارب</div><div class="macro-num text-carbs" id="who_c">0</div></div>
+                        <div class="macro-card"><div class="macro-label">دهون</div><div class="macro-num text-fats" id="who_f">0</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Athletes Section -->
+        <section id="athletes" class="section-card">
+            <div class="athlete_card card-header header-athlete">
+                <i class="fa-solid fa-person-running header-bg-icon"></i>
+                <div class="athlete-icon"><img src="photo/14.jpg" alt=""></div>
+                <!-- <h2 class="card-title">الرياضيين (نشاط عالي)</h2> -->
+                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">للأبطال: وثب، رمي، سباقات سرعة</p> -->
+            </div>
+            <div class="card-body">
+                <div style="background: rgba(220, 38, 38, 0.1); color: #b91c1c; padding: 10px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-circle-info"></i>
+                    خاص بالرياضات العنيفة وعالية الكثافة فقط.
+                </div>
+                <div class="grid-layout">
+                    <div class="input-group">
+                        <label class="input-label">الجنس</label>
+                        <select id="ath_gender" class="form-control"><option value="male">ذكر</option><option value="female">أنثى</option></select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">الوزن (كجم)</label>
+                        <input type="number" id="ath_weight" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">ساعات النوم</label>
+                        <input type="number" id="ath_sleep" class="form-control" placeholder="مثال: 8">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">معامل النشاط</label>
+                        <select id="ath_activity" class="form-control">
+                            <option value="0.79">0.79</option>
+                            <option value="1.1">1.1</option>
+                            <option value="2.79">2.79</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="calcAthlete()" class="btn-calculate btn-athlete">
+                    <i class="fa-solid fa-bolt"></i> احسب المعدل
+                </button>
+
+                <div id="ath_result" class="results-container" style="border-color: var(--color-athlete);">
+                    <div class="result-item"><span>عامل النوم (A):</span> <span class="result-value" id="ath_sleep_term">0</span></div>
+                    <div class="result-item"><span>الجزء النشط (Base):</span> <span class="result-value" id="ath_base_term">0</span></div>
+                    <div class="result-item"><span>BMR Athlete:</span> <span class="result-value" id="ath_bmr">0</span></div>
+                    <div class="result-item" style="margin-top:10px; padding-top:10px; border-top:1px solid #eee;">
+                        <span>السعرات الكلية:</span>
+                        <span class="result-value" style="color: var(--color-athlete); font-size: 1.3rem;" id="ath_total">0</span>
+                    </div>
+                    <div class="macros-box">
+                        <div class="macro-card"><div class="macro-label">بروتين</div><div class="macro-num text-protein" id="ath_p">0</div></div>
+                        <div class="macro-card"><div class="macro-label">كارب</div><div class="macro-num text-carbs" id="ath_c">0</div></div>
+                        <div class="macro-card"><div class="macro-label">دهون</div><div class="macro-num text-fats" id="ath_f">0</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. BMI Section -->
+        <section id="bmi" class="section-card">
+            <div class="bmi_card card-header header-bmi">
+                <i class="fa-solid fa-scale-balanced header-bg-icon"></i>
+                <div class="bmi-icon"><img src="photo/1.jpeg" alt=""></div>
+                <!-- <h2 class="card-title">كتلة الجسم (BMI)</h2> -->
+                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">تقييم الوزن المثالي والسمنة</p> -->
+            </div>
+            <div class="card-body">
+                <div class="grid-layout">
+                    <div class="input-group">
+                        <label class="input-label">الوزن (كجم)</label>
+                        <input type="number" id="bmi_weight" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">الطول (سم)</label>
+                        <input type="number" id="bmi_height" class="form-control" placeholder="170">
+                    </div>
+                </div>
+
+                <button onclick="calcBMI()" class="btn-calculate btn-bmi">
+                    احسب المؤشر
+                </button>
+
+                <div id="bmi_result" class="results-container" style="border-color: var(--color-bmi); text-align: center;">
+                    <div style="font-size: 1rem; color: var(--text-muted); margin-bottom: 10px;">قيمة المؤشر</div>
+                    <div id="bmi_value" style="font-size: 3.5rem; font-weight: 800; color: var(--color-bmi); line-height: 1;">0.0</div>
+                    <div id="bmi_status" style="display: inline-block; padding: 8px 24px; border-radius: 50px; color: white; font-weight: bold; margin-top: 15px; background: #ccc;">
+                        ---
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+                   
+        <div class="footer-copy">
+             <a id="footer-link" href="https://ahmed-attia-portfolio-ahm3d0xs-projects.vercel.app/">
+               Developed by : <span class="developer"> Ahmed M Attia</span></a>
+        </div>
+
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">
+<p class="footer-text" style="font-size: 1rem; color: var(--text-muted); margin-top: 0.25rem;">
+  جميع الحقوق محفوظة &copy; CAP.NOOH <span id="year"></span>
+</p>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+        </div>
+    </footer>
+    <!-- Custom Alert Modal -->
+    <div id="customAlert" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+            <h3 class="modal-title">تنبيه</h3>
+            <p class="modal-message" id="alertMessage">يرجى إدخال جميع البيانات</p>
+            <button class="modal-btn" onclick="closeCustomAlert()">حسناً</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Custom Alert System ---
+        function showAlert(message) {
+            document.getElementById('alertMessage').innerText = message;
+            document.getElementById('customAlert').classList.add('open');
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('customAlert').classList.remove('open');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('customAlert').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCustomAlert();
+            }
+        });
+
+        // --- Tabs System ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.section-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.dataset.target === tabId) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                if(link.dataset.target === tabId) link.classList.add('active');
+                else link.classList.remove('active');
+            });
+
+            document.getElementById('mobileMenu').classList.remove('open');
+        }
+
+        // --- Mobile Menu Toggle ---
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // --- Dark Mode ---
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlEl = document.documentElement;
+        
+        if(localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlEl.classList.add('dark');
+            themeToggle.innerHTML = '<i class="fa-solid fa-sun text-primary"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            htmlEl.classList.toggle('dark');
+            if(htmlEl.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeToggle.innerHTML = '<i class="fa-solid fa-sun" style="color:var(--primary-color)"></i>';
+            } else {
+                localStorage.theme = 'light';
+                themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            }
+        });
+
+        // ==================================================
+        // ============ CALCULATIONS LOGIC ==================
+        // ==================================================
+
+        // 1. Bodybuilders
+        function calcBodybuilder() {
+            const w = parseFloat(document.getElementById('bb_weight').value);
+            const h = parseFloat(document.getElementById('bb_height').value);
+            const age = parseFloat(document.getElementById('bb_age').value);
+            const gender = document.getElementById('bb_gender').value;
+            const activity = parseFloat(document.getElementById('bb_activity').value);
+
+            if(!w || !h || !age) return showAlert('يرجى إدخال جميع البيانات');
+
+            let bmr = (10 * w) + (6.25 * h) - (5 * age);
+            bmr += (gender === 'male') ? 5 : -161;
+
+            const total = bmr * activity;
+            
+            showResults('bb_result', {
+                bmr: bmr,
+                total: total,
+                p: total / 4,
+                c: total / 4,
+                f: total / 9
+            }, 'bb');
+        }
+
+        // 2. Normal
+        function calcNormal() {
+            const w = parseFloat(document.getElementById('norm_weight').value);
+            const h = parseFloat(document.getElementById('norm_height').value);
+            const age = parseFloat(document.getElementById('norm_age').value);
+            const gender = document.getElementById('norm_gender').value;
+            const activity = parseFloat(document.getElementById('norm_activity').value);
+
+            if(!w || !h || !age) return showAlert('يرجى إدخال البيانات');
+
+            let bmr = 0;
+            if (gender === 'male') {
+                bmr = (13.8 * w) + (5 * h) + (6.8 * age) + 66.5;
+            } else {
+                bmr = (9.6 * w) + (1.9 * h) + (4.7 * age) + 655.1;
+            }
+
+            const total = bmr * activity;
+            showResults('norm_result', {
+                bmr: bmr,
+                total: total,
+                p: total / 4,
+                c: total / 4,
+                f: total / 9
+            }, 'norm');
+        }
+
+        // 3. WHO
+        function toggleSpecialCase() {
+            const val = document.getElementById('who_special_status').value;
+            const box = document.getElementById('special_case_container');
+            box.style.display = (val === 'yes') ? 'block' : 'none';
+        }
+
+        function calcWHO() {
+            const w = parseFloat(document.getElementById('who_weight').value);
+            const age = parseFloat(document.getElementById('who_age').value);
+            const gender = document.getElementById('who_gender').value;
+            const activity = parseFloat(document.getElementById('who_activity').value);
+            const hasSpecial = document.getElementById('who_special_status').value === 'yes';
+            const disease = document.getElementById('who_disease').value;
+
+            if(!w || !age) return showAlert('يرجى إدخال الوزن والعمر');
+
+            let bmr = 0;
+            if (gender === 'male') {
+                if (age >= 3 && age <= 9) bmr = (22.7 * w) + 495;
+                else if (age <= 17) bmr = (17.5 * w) + 651;
+                else if (age <= 29) bmr = (15.9 * w) + 679;
+                else if (age <= 60) bmr = (11.6 * w) + 879;
+                else bmr = (13.5 * w) + 487;
+            } else {
+                if (age >= 3 && age <= 9) bmr = (22.5 * w) + 499;
+                else if (age <= 17) bmr = (12.2 * w) + 746;
+                else if (age <= 29) bmr = (14.7 * w) + 496;
+                else if (age <= 60) bmr = (8.7 * w) + 829;
+                else bmr = (10.5 * w) + 596;
+            }
+
+            let total = bmr * activity;
+            const before = total;
+            
+            let spName = "", spNote = "";
+
+            if (hasSpecial) {
+                const cases = {
+                    'diabetes': { v: 300, n: 'مريض السكر', d: 'زيادة 300' },
+                    'hypertension': { v: -250, n: 'مريض الضغط', d: 'خصم 250' },
+                    'heart_disease': { v: -250, n: 'مريض القلب', d: 'خصم 250' },
+                    'hypothyroid': { v: -500, n: 'كسل الغدة', d: 'خصم 500' },
+                    'hyperthyroid': { v: 500, n: 'فرط الغدة', d: 'زيادة 500' },
+                    'hyperlipidemia': { v: -150, n: 'كوليسترول', d: 'خصم 150' },
+                    'liver_disease': { v: 300, n: 'مريض الكبد', d: 'زيادة 300' },
+                    'renal_failure': { v: 800, n: 'فشل كلوي', d: 'زيادة 800' },
+                    'anemia': { v: 300, n: 'أنيميا', d: 'زيادة 300 (بروتين)' },
+                    'pregnant': { v: 300, n: 'حامل', d: 'زيادة 300-500' },
+                    'lactating': { v: 0, n: 'مرضع', d: 'لا تغيير' }
+                };
+                const c = cases[disease];
+                if(c) {
+                    total += c.v;
+                    spName = c.n;
+                    spNote = c.d;
+                    document.getElementById('who_special_info').style.display = 'block';
+                    document.getElementById('special_name').innerText = spName;
+                    document.getElementById('special_effect').innerText = spNote;
+                }
+            } else {
+                document.getElementById('who_special_info').style.display = 'none';
+            }
+
+            document.getElementById('who_bmr').innerText = Math.round(bmr);
+            document.getElementById('who_before').innerText = Math.round(before);
+            document.getElementById('who_final').innerText = Math.round(total);
+            
+            document.getElementById('who_p').innerText = Math.round(total/4);
+            document.getElementById('who_c').innerText = Math.round(total/4);
+            document.getElementById('who_f').innerText = Math.round(total/9);
+
+            document.getElementById('who_result').style.display = 'block';
+        }
+
+        // 4. Athlete
+        function calcAthlete() {
+            const w = parseFloat(document.getElementById('ath_weight').value);
+            const sleep = parseFloat(document.getElementById('ath_sleep').value);
+            const gender = document.getElementById('ath_gender').value;
+            const activity = parseFloat(document.getElementById('ath_activity').value);
+
+            if(!w || !sleep) return showAlert('ادخل البيانات');
+
+            const A = w * sleep * 0.1;
+            const factor = (gender === 'male') ? 24 : 22;
+            const base = w * (factor - A);
+            let bmr = A + base;
+            if(bmr < 0) bmr = 0;
+
+            const total = bmr * activity;
+            
+            document.getElementById('ath_sleep_term').innerText = A.toFixed(1);
+            document.getElementById('ath_base_term').innerText = base.toFixed(1);
+            document.getElementById('ath_bmr').innerText = Math.round(bmr);
+            document.getElementById('ath_total').innerText = Math.round(total);
+
+            document.getElementById('ath_p').innerText = Math.round(total/4);
+            document.getElementById('ath_c').innerText = Math.round(total/4);
+            document.getElementById('ath_f').innerText = Math.round(total/9);
+
+            document.getElementById('ath_result').style.display = 'block';
+        }
+
+        // 5. BMI
+        function calcBMI() {
+            const w = parseFloat(document.getElementById('bmi_weight').value);
+            const h = parseFloat(document.getElementById('bmi_height').value);
+            if(!w || !h) return showAlert('ادخل البيانات');
+
+            const hm = h / 100;
+            const bmi = w / (hm * hm);
+            
+            let status = '', color = '#ccc';
+            if (bmi < 18.5) { status = 'نحافة'; color = '#eab308'; }
+            else if (bmi <= 24.9) { status = 'وزن سليم'; color = '#22c55e'; }
+            else if (bmi <= 29.9) { status = 'وزن زائد'; color = '#f97316'; }
+            else if (bmi <= 35) { status = 'سمنة'; color = '#ef4444'; }
+            else if (bmi <= 40) { status = 'سمنة متوسطة'; color = '#b91c1c'; }
+            else { status = 'سمنة مفرطة'; color = '#7f1d1d'; }
+
+            document.getElementById('bmi_value').innerText = bmi.toFixed(1);
+            const st = document.getElementById('bmi_status');
+            st.innerText = status;
+            st.style.backgroundColor = color;
+            
+            document.getElementById('bmi_result').style.display = 'block';
+        }
+
+        // Helper
+        function showResults(boxId, data, prefix) {
+            document.getElementById(prefix+'_bmr_val').innerText = Math.round(data.bmr);
+            document.getElementById(prefix+'_total_val').innerText = Math.round(data.total);
+            document.getElementById(prefix+'_protein').innerText = Math.round(data.p);
+            document.getElementById(prefix+'_carbs').innerText = Math.round(data.c);
+            document.getElementById(prefix+'_fats').innerText = Math.round(data.f);
+            document.getElementById(boxId).style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById(boxId).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+    </script>
+</body>
+</html>
+
