@@ -106,7 +106,7 @@ Right-to-Left (RTL) layout with the **Cairo** font for clean UI consistency.
 ## 📂 Project Structure
 
 Although delivered as a single HTML file, the internal structure is modular:
-
+```
 CAP_NOOH_Calculator.html
 │
 ├── <head>
@@ -130,6 +130,7 @@ CAP_NOOH_Calculator.html
 │ ├── Navigation Logic
 │ ├── Calculator Functions
 │ └── UI Interaction (Modals, Theme)
+```
 ---
 
 ## 👤 Credits
@@ -142,3 +143,4 @@ CAP_NOOH_Calculator.html
 This project was created following the detailed requirements provided in the official specification document.
 
 ---
+
