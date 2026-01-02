@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAP.NOOH | حاسبة الصحة والرياضة</title>
     <link rel="icon" href="photo/13.jpeg">
-    <!-- استدعاء الخطوط والأيقونات -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -108,12 +107,12 @@
             color: #fff;
             font-size: 1.2rem;
         }
-.logo-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-}
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
         .logo-text {
             font-size: 1.5rem;
             font-weight: 800;
@@ -357,6 +356,13 @@
             background-color: var(--bg-card);
         }
 
+        /* تنسيق جديد لحقول النسب */
+        .ratios-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
         /* أزرار الحساب */
         .btn-calculate {
             width: 100%;
@@ -570,19 +576,18 @@
             border-radius: 1%;
             overflow: hidden;
             margin-right: 10px;
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
+        }
+        .bodybuilders-icon img, .normal-icon img, .who-icon img, .athlete-icon img, .bmi-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Header & Navigation -->
     <header>
         <div class="nav-container">
             <a href="#" class="logo">
@@ -590,7 +595,6 @@ img {
                 <div class="logo-text">CAP.NOOH</div>
             </a>
 
-            <!-- Desktop Menu -->
             <nav class="desktop-nav">
                 <button onclick="switchTab('bodybuilders')" class="nav-btn active" data-target="bodybuilders">كمال الأجسام</button>
                 <button onclick="switchTab('normal')" class="nav-btn" data-target="normal">الأشخاص العاديين</button>
@@ -599,7 +603,6 @@ img {
                 <button onclick="switchTab('bmi')" class="nav-btn" data-target="bmi">كتلة الجسم (BMI)</button>
             </nav>
 
-            <!-- Controls -->
             <div class="controls">
                 <button id="themeToggle" class="icon-btn" title="تبديل الوضع">
                     <i class="fa-solid fa-moon"></i>
@@ -610,7 +613,6 @@ img {
             </div>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobileMenu" class="mobile-menu">
             <button onclick="switchTab('bodybuilders')" class="mobile-link active" data-target="bodybuilders"> <i class="fa-solid fa-dumbbell ml-2"></i> كمال الأجسام</button>
             <button onclick="switchTab('normal')" class="mobile-link" data-target="normal"> <i class="fa-solid fa-person ml-2"></i> الأشخاص العاديين</button>
@@ -621,14 +623,10 @@ img {
     </header>
 
     <main>
-        <!-- 1. Bodybuilders Section -->
         <section id="bodybuilders" class="section-card active">
             <div class="bodybuilders_card card-header header-bb">
                 <i class="fa-solid fa-weight-hanging header-bg-icon"></i>
-                <!-- <div class="logo-icon"><img src="photo/13.jpeg" alt=""></div> -->
                 <div class="bodybuilders-icon"><img src="photo/2.jpeg" alt=""></div>
-                <!-- <h2 class="card-title">كمال الأجسام</h2> -->
-                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">حساب السعرات والماكروز للاعبين</p> -->
             </div>
             <div class="card-body">
                 <div class="grid-layout">
@@ -660,13 +658,30 @@ img {
                             <option value="1.9">1.9</option>
                         </select>
                     </div>
+                    
+                    <div class="input-group full-width">
+                        <label class="input-label" style="color: var(--color-bb);">تحديد نسب الماكروز (%)</label>
+                        <div class="ratios-grid">
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">بروتين %</label>
+                                <input type="number" id="bb_ratio_p" class="form-control" placeholder="30" value="30">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">كارب %</label>
+                                <input type="number" id="bb_ratio_c" class="form-control" placeholder="50" value="50">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">دهون %</label>
+                                <input type="number" id="bb_ratio_f" class="form-control" placeholder="20" value="20">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <button onclick="calcBodybuilder()" class="btn-calculate btn-bb">
                     <i class="fa-solid fa-calculator"></i> احسب النتائج
                 </button>
 
-                <!-- Result Box -->
                 <div id="bb_result" class="results-container" style="border-color: var(--color-bb);">
                     <div class="result-header">
                         <span class="result-title">التقرير النهائي</span>
@@ -699,13 +714,10 @@ img {
             </div>
         </section>
 
-        <!-- 2. Normal People Section -->
         <section id="normal" class="section-card">
             <div class="normal_card card-header header-normal">
                 <i class="fa-solid fa-person-walking header-bg-icon"></i>
                 <div class="normal-icon"><img src="photo/6.jpeg" alt=""></div>
-                <!-- <h2 class="card-title">الأشخاص العاديين</h2> -->
-                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">للحياة اليومية والنشاط العادي</p> -->
             </div>
             <div class="card-body">
                 <div class="grid-layout">
@@ -736,6 +748,24 @@ img {
                             <option value="1.4">1.4</option>
                         </select>
                     </div>
+
+                    <div class="input-group full-width">
+                        <label class="input-label" style="color: var(--color-normal);">تحديد نسب الماكروز (%)</label>
+                        <div class="ratios-grid">
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">بروتين %</label>
+                                <input type="number" id="norm_ratio_p" class="form-control" placeholder="20" value="20">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">كارب %</label>
+                                <input type="number" id="norm_ratio_c" class="form-control" placeholder="50" value="50">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">دهون %</label>
+                                <input type="number" id="norm_ratio_f" class="form-control" placeholder="30" value="30">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <button onclick="calcNormal()" class="btn-calculate btn-normal">
@@ -763,13 +793,10 @@ img {
             </div>
         </section>
 
-        <!-- 3. WHO Section -->
         <section id="who" class="section-card">
             <div class="who_card card-header header-who">
                 <i class="fa-solid fa-user-doctor header-bg-icon"></i>
                 <div class="who-icon"><img src="photo/12.jpeg" alt=""></div>
-                <!-- <h2 class="card-title">منظمة الصحة العالمية</h2> -->
-                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">معادلات منظمة الصحة العالمية مع الحالات الخاصة</p> -->
             </div>
             <div class="card-body">
                 <div class="grid-layout">
@@ -805,18 +832,36 @@ img {
                         
                       <div id="special_case_container" style="display: none; animation: slideDown 0.3s;">
                             <select id="who_disease" class="form-control" style="border-color: var(--color-who);">
-                                <option value="diabetes">مريض السكر (+300)</option>
+                                <option value="diabetes">مريض السكر (-300)</option>
                                 <option value="hypertension">مريض الضغط (-250)</option>
                                 <option value="heart_disease">مريض القلب (-250)</option>
                                 <option value="hypothyroid">كسل الغدة الدرقية (-500)</option>
                                 <option value="hyperthyroid">فرط نشاط الغدة (+500)</option>
                                 <option value="hyperlipidemia">ارتفاع الكوليسترول (-150)</option>
-                                <option value="liver_disease">مريض الكبد (+300)</option>
-                                <option value="renal_failure">فشل كلوي (+800)</option>
+                                <option value="liver_disease">مريض الكبد (-300)</option>
+                                <option value="renal_failure">فشل كلوي (-800)</option>
                                 <option value="anemia">أنيميا (+300 بروتين)</option>
                                 <option value="pregnant">حامل (+300/500)</option>
                                 <option value="lactating">مرضع (+0)</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label class="input-label" style="color: var(--color-who);">تحديد نسب الماكروز (%)</label>
+                        <div class="ratios-grid">
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">بروتين %</label>
+                                <input type="number" id="who_ratio_p" class="form-control" placeholder="25" value="25">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">كارب %</label>
+                                <input type="number" id="who_ratio_c" class="form-control" placeholder="50" value="50">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">دهون %</label>
+                                <input type="number" id="who_ratio_f" class="form-control" placeholder="25" value="25">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -854,13 +899,10 @@ img {
             </div>
         </section>
 
-        <!-- 4. Athletes Section -->
         <section id="athletes" class="section-card">
             <div class="athlete_card card-header header-athlete">
                 <i class="fa-solid fa-person-running header-bg-icon"></i>
                 <div class="athlete-icon"><img src="photo/14.jpg" alt=""></div>
-                <!-- <h2 class="card-title">الرياضيين (نشاط عالي)</h2> -->
-                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">للأبطال: وثب، رمي، سباقات سرعة</p> -->
             </div>
             <div class="card-body">
                 <div style="background: rgba(220, 38, 38, 0.1); color: #b91c1c; padding: 10px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
@@ -888,6 +930,24 @@ img {
                             <option value="2.79">2.79</option>
                         </select>
                     </div>
+
+                    <div class="input-group full-width">
+                        <label class="input-label" style="color: var(--color-athlete);">تحديد نسب الماكروز (%)</label>
+                        <div class="ratios-grid">
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">بروتين %</label>
+                                <input type="number" id="ath_ratio_p" class="form-control" placeholder="35" value="35">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">كارب %</label>
+                                <input type="number" id="ath_ratio_c" class="form-control" placeholder="45" value="45">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; color: var(--text-muted);">دهون %</label>
+                                <input type="number" id="ath_ratio_f" class="form-control" placeholder="20" value="20">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <button onclick="calcAthlete()" class="btn-calculate btn-athlete">
@@ -911,13 +971,10 @@ img {
             </div>
         </section>
 
-        <!-- 5. BMI Section -->
         <section id="bmi" class="section-card">
             <div class="bmi_card card-header header-bmi">
                 <i class="fa-solid fa-scale-balanced header-bg-icon"></i>
                 <div class="bmi-icon"><img src="photo/1.jpeg" alt=""></div>
-                <!-- <h2 class="card-title">كتلة الجسم (BMI)</h2> -->
-                <!-- <p style="opacity: 0.9; font-size: 0.9rem;">تقييم الوزن المثالي والسمنة</p> -->
             </div>
             <div class="card-body">
                 <div class="grid-layout">
@@ -963,7 +1020,6 @@ img {
 </script>
         </div>
     </footer>
-    <!-- Custom Alert Modal -->
     <div id="customAlert" class="modal-overlay">
         <div class="modal-box">
             <div class="modal-icon">
@@ -975,7 +1031,6 @@ img {
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
         // --- Custom Alert System ---
         function showAlert(message) {
@@ -1052,6 +1107,11 @@ img {
             const age = parseFloat(document.getElementById('bb_age').value);
             const gender = document.getElementById('bb_gender').value;
             const activity = parseFloat(document.getElementById('bb_activity').value);
+            
+            // Get Ratios
+            const rP = parseFloat(document.getElementById('bb_ratio_p').value) || 0;
+            const rC = parseFloat(document.getElementById('bb_ratio_c').value) || 0;
+            const rF = parseFloat(document.getElementById('bb_ratio_f').value) || 0;
 
             if(!w || !h || !age) return showAlert('يرجى إدخال جميع البيانات');
 
@@ -1060,12 +1120,17 @@ img {
 
             const total = bmr * activity;
             
+            // Calculate Grams based on percentage
+            const pGrams = (total * (rP / 100)) / 4;
+            const cGrams = (total * (rC / 100)) / 4;
+            const fGrams = (total * (rF / 100)) / 9;
+
             showResults('bb_result', {
                 bmr: bmr,
                 total: total,
-                p: total / 4,
-                c: total / 4,
-                f: total / 9
+                p: pGrams,
+                c: cGrams,
+                f: fGrams
             }, 'bb');
         }
 
@@ -1077,6 +1142,11 @@ img {
             const gender = document.getElementById('norm_gender').value;
             const activity = parseFloat(document.getElementById('norm_activity').value);
 
+            // Get Ratios
+            const rP = parseFloat(document.getElementById('norm_ratio_p').value) || 0;
+            const rC = parseFloat(document.getElementById('norm_ratio_c').value) || 0;
+            const rF = parseFloat(document.getElementById('norm_ratio_f').value) || 0;
+
             if(!w || !h || !age) return showAlert('يرجى إدخال البيانات');
 
             let bmr = 0;
@@ -1087,12 +1157,18 @@ img {
             }
 
             const total = bmr * activity;
+
+            // Calculate Grams based on percentage
+            const pGrams = (total * (rP / 100)) / 4;
+            const cGrams = (total * (rC / 100)) / 4;
+            const fGrams = (total * (rF / 100)) / 9;
+
             showResults('norm_result', {
                 bmr: bmr,
                 total: total,
-                p: total / 4,
-                c: total / 4,
-                f: total / 9
+                p: pGrams,
+                c: cGrams,
+                f: fGrams
             }, 'norm');
         }
 
@@ -1110,6 +1186,11 @@ img {
             const activity = parseFloat(document.getElementById('who_activity').value);
             const hasSpecial = document.getElementById('who_special_status').value === 'yes';
             const disease = document.getElementById('who_disease').value;
+
+            // Get Ratios
+            const rP = parseFloat(document.getElementById('who_ratio_p').value) || 0;
+            const rC = parseFloat(document.getElementById('who_ratio_c').value) || 0;
+            const rF = parseFloat(document.getElementById('who_ratio_f').value) || 0;
 
             if(!w || !age) return showAlert('يرجى إدخال الوزن والعمر');
 
@@ -1135,14 +1216,14 @@ img {
 
             if (hasSpecial) {
                 const cases = {
-                    'diabetes': { v: 300, n: 'مريض السكر', d: 'زيادة 300' },
+                    'diabetes': { v: -300, n: 'مريض السكر', d: 'خصم 300' },
                     'hypertension': { v: -250, n: 'مريض الضغط', d: 'خصم 250' },
                     'heart_disease': { v: -250, n: 'مريض القلب', d: 'خصم 250' },
                     'hypothyroid': { v: -500, n: 'كسل الغدة', d: 'خصم 500' },
                     'hyperthyroid': { v: 500, n: 'فرط الغدة', d: 'زيادة 500' },
                     'hyperlipidemia': { v: -150, n: 'كوليسترول', d: 'خصم 150' },
-                    'liver_disease': { v: 300, n: 'مريض الكبد', d: 'زيادة 300' },
-                    'renal_failure': { v: 800, n: 'فشل كلوي', d: 'زيادة 800' },
+                    'liver_disease': { v: -300, n: 'مريض الكبد', d: 'خصم 300' },
+                    'renal_failure': { v: -800, n: 'فشل كلوي', d: 'خصم 800' },
                     'anemia': { v: 300, n: 'أنيميا', d: 'زيادة 300 (بروتين)' },
                     'pregnant': { v: 300, n: 'حامل', d: 'زيادة 300-500' },
                     'lactating': { v: 0, n: 'مرضع', d: 'لا تغيير' }
@@ -1164,11 +1245,17 @@ img {
             document.getElementById('who_before').innerText = Math.round(before);
             document.getElementById('who_final').innerText = Math.round(total);
             
-            document.getElementById('who_p').innerText = Math.round(total/4);
-            document.getElementById('who_c').innerText = Math.round(total/4);
-            document.getElementById('who_f').innerText = Math.round(total/9);
+            // Calculate Grams based on percentage (using Total AFTER adjustment)
+            const pGrams = (total * (rP / 100)) / 4;
+            const cGrams = (total * (rC / 100)) / 4;
+            const fGrams = (total * (rF / 100)) / 9;
+
+            document.getElementById('who_p').innerText = Math.round(pGrams);
+            document.getElementById('who_c').innerText = Math.round(cGrams);
+            document.getElementById('who_f').innerText = Math.round(fGrams);
 
             document.getElementById('who_result').style.display = 'block';
+            document.getElementById('who_result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         // 4. Athlete
@@ -1178,12 +1265,17 @@ img {
             const gender = document.getElementById('ath_gender').value;
             const activity = parseFloat(document.getElementById('ath_activity').value);
 
+            // Get Ratios
+            const rP = parseFloat(document.getElementById('ath_ratio_p').value) || 0;
+            const rC = parseFloat(document.getElementById('ath_ratio_c').value) || 0;
+            const rF = parseFloat(document.getElementById('ath_ratio_f').value) || 0;
+
             if(!w || !sleep) return showAlert('ادخل البيانات');
 
             const A = w * sleep * 0.1;
             const factor = (gender === 'male') ? 24 : 22;
-            const base = w * (factor - A);
-            let bmr = A + base;
+            const base = (w * factor) - A;
+            let bmr = base;
             if(bmr < 0) bmr = 0;
 
             const total = bmr * activity;
@@ -1193,11 +1285,17 @@ img {
             document.getElementById('ath_bmr').innerText = Math.round(bmr);
             document.getElementById('ath_total').innerText = Math.round(total);
 
-            document.getElementById('ath_p').innerText = Math.round(total/4);
-            document.getElementById('ath_c').innerText = Math.round(total/4);
-            document.getElementById('ath_f').innerText = Math.round(total/9);
+            // Calculate Grams based on percentage
+            const pGrams = (total * (rP / 100)) / 4;
+            const cGrams = (total * (rC / 100)) / 4;
+            const fGrams = (total * (rF / 100)) / 9;
+
+            document.getElementById('ath_p').innerText = Math.round(pGrams);
+            document.getElementById('ath_c').innerText = Math.round(cGrams);
+            document.getElementById('ath_f').innerText = Math.round(fGrams);
 
             document.getElementById('ath_result').style.display = 'block';
+            document.getElementById('ath_result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         // 5. BMI
@@ -1241,4 +1339,3 @@ img {
     </script>
 </body>
 </html>
-
